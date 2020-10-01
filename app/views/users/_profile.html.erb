@@ -15,3 +15,10 @@
 <div class="row">
 	<%= link_to '', edit_user_path(user), class: "col-xs-12 btn btn-default glyphicon glyphicon-wrench edit_user_#{user.id}" %>
 </div>
+
+<div class="row">
+	<p class="text-center">
+		<%= user.followings.count %><%= link_to "followings", user_followings_path(user) %> |
+		<%= user.followers.count %><%= link_to "followers", user_followers_path(user) %>
+	</p>
+</div>
