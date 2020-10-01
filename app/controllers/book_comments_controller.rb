@@ -1,12 +1,10 @@
 class BookCommentsController < ApplicationController
   def create
-    session[:previous_url] = request.referer
     @book = Book.find(params[:book_id])
     @comment_new = current_user.book_comments.new(book_comment_params)
     @comment_new.book_id = @book.id
     if @comment_new.save
-      redirect_to session[:previous_url]
-      session.delete(:previous_url)  
+      redirect_to @book
     else
       @book_new = Book.new
       render "books/show"
