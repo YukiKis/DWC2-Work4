@@ -22,8 +22,22 @@
 	<tbody>
 		<% @users.each do |user| %>
 		<tr>
-			<td><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></td>
+			<th><%= attachment_image_tag(user, :profile_image, :fill, 50, 50, fallback: "no-image-mini.jpg") %></th>
 			<td><%= user.name %></td>
+			<td>フォロー数:<%= user.followings.count %></td>
+      <td>フォロワー数:<%= user.followers.count %></td>
+      <td>
+        <% if !current_user.following?(user) %>
+         	<%= form_with model: current_user.active_relationships.build, local: true do |f| %>
+				  	<div><%= hidden_field_tag :followed_id, user.id %></div>
+ 				 		<%= f.submit "フォローする", class: "btn btn-link", style: "line-height: 0;" %>
+					<% end %>
+				<% else %>
+					<%= form_with model: current_user.active_relationships.find_by(followed_id: user.id), method: :delete, local: true do |f| %>
+						<%= f.submit "フォローを外す", class: "btn btn-link", style: "line-height] 0" %>
+					<% end %>
+			 	<% end %>
+      </td>
 			<td><%= link_to "Show", user_path(user), class: "user_#{user.id}" %></td>
 		</tr>
 		<% end %>

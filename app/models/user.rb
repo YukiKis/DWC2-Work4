@@ -18,6 +18,12 @@ class User < ApplicationRecord
   validates :name, length: {maximum: 20, minimum: 2}, uniqueness: true
   validates :introduction, length: { maximum: 50}
 
+  # When you want to see all books not only posted by yourself but also by your followings
+  # def feed
+  #   followings_ids = "SELECT followed_id FROM relatioships where followed_id = :user_id"
+  #   Books.where("user_id in #{followings_ids} OR user_id = :user_id", user_id: id)
+  # end
+
   def follow(other_user)
     self.followings << other_user
   end

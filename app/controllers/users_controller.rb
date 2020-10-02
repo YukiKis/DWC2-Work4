@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   before_action :ensure_correct_user, only: [:update]
-  before_action :authenticate_user!, only: [:index, :show, :edit]
+  before_action :authenticate_user!, only: [:index, :show, :edit, :followers, :followings]
 
   def index
     @users = User.all
@@ -31,6 +31,14 @@ class UsersController < ApplicationController
     else
       render "edit"
     end
+  end
+
+  def followers
+    @user = User.find(params[:user_id])
+  end
+
+  def followings
+    @user = User.find(params[:user_id])
   end
 
   private
